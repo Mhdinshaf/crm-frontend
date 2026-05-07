@@ -237,7 +237,7 @@ const Leads = () => {
               <div className="grid grid-cols-2 gap-4">
                 <div><label className="block text-sm font-medium mb-1">Deal Value (Rs)</label><input required type="number" className="w-full border p-2 rounded-lg" value={formData.deal_value} onChange={e => setFormData({...formData, deal_value: e.target.value})} /></div>
                 
-                {/* 🚀 අලුත් Assigned Salesperson Field එක */}
+            
                 <div>
                   <label className="block text-sm font-medium mb-1">Salesperson</label>
                   <input type="text" placeholder="Eg: John Doe" className="w-full border p-2 rounded-lg" value={formData.assigned_salesperson} onChange={e => setFormData({...formData, assigned_salesperson: e.target.value})} />
