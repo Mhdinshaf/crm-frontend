@@ -39,53 +39,56 @@ const Dashboard = () => {
   const wonDealValue = leads.filter(l => l.status === 'Won').reduce((sum, lead) => sum + Number(lead.deal_value || 0), 0);
 
   const StatCard = ({ title, value, icon: Icon, colorClass }) => (
-    <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center space-x-4">
-      <div className={`p-3 rounded-xl ${colorClass}`}><Icon size={24} /></div>
-      <div><p className="text-sm font-medium text-gray-500">{title}</p><h3 className="text-2xl font-bold text-gray-900">{value}</h3></div>
+    <div className="bg-white p-6 rounded-3xl shadow-[0_2px_10px_rgb(0,0,0,0.02)] border border-slate-100 flex items-center space-x-4 hover:-translate-y-1 hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] transition-all duration-300">
+      <div className={`p-4 rounded-2xl ${colorClass} bg-opacity-20 backdrop-blur-sm`}><Icon size={24} /></div>
+      <div><p className="text-sm font-semibold text-slate-500 tracking-wide">{title}</p><h3 className="text-3xl font-extrabold text-slate-900 mt-1">{value}</h3></div>
     </div>
   );
 
-  if (loading) return <div className="min-h-screen flex items-center justify-center bg-gray-50">Loading Dashboard...</div>;
+  if (loading) return <div className="min-h-screen flex items-center justify-center bg-slate-50"><div className="w-8 h-8 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin"></div></div>;
 
   return (
-    <div className="min-h-screen bg-gray-50 flex">
-      <div className="w-64 bg-white border-r border-gray-200 p-4 flex flex-col">
-        <div className="flex items-center space-x-2 px-4 py-3 mb-6">
-          <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold">V</div>
-          <span className="text-xl font-bold text-gray-900">VibeIt CRM</span>
+    <div className="min-h-screen bg-slate-50 flex">
+      {/* Sidebar */}
+      <div className="w-72 bg-white/60 backdrop-blur-xl border-r border-slate-200/60 p-6 flex flex-col shadow-[4px_0_24px_rgb(0,0,0,0.02)] z-10">
+        <div className="flex items-center space-x-3 px-2 py-2 mb-8">
+          <div className="w-10 h-10 bg-gradient-to-tr from-indigo-600 to-blue-500 rounded-xl flex items-center justify-center text-white font-bold shadow-lg shadow-indigo-200">V</div>
+          <span className="text-2xl font-extrabold text-slate-900 tracking-tight">VibeIt CRM</span>
         </div>
-        <nav className="flex-1 space-y-1">
-          <Link to="/dashboard" className="flex items-center space-x-3 px-4 py-3 bg-blue-50 text-blue-700 rounded-xl font-medium">
+        <nav className="flex-1 space-y-2">
+          <Link to="/dashboard" className="flex items-center space-x-3 px-4 py-3.5 bg-indigo-50 text-indigo-700 rounded-2xl font-semibold transition-all">
             <LayoutDashboard size={20} /><span>Dashboard</span>
           </Link>
-          <Link to="/leads" className="flex items-center space-x-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-xl font-medium transition-colors">
+          <Link to="/leads" className="flex items-center space-x-3 px-4 py-3.5 text-slate-500 hover:bg-slate-100 hover:text-slate-900 rounded-2xl font-semibold transition-all">
             <Users size={20} /><span>All Leads</span>
           </Link>
         </nav>
-        <button onClick={handleLogout} className="flex items-center space-x-3 px-4 py-3 text-red-600 hover:bg-red-50 rounded-xl font-medium mt-auto">
+        <button onClick={handleLogout} className="flex items-center space-x-3 px-4 py-3.5 text-red-500 hover:bg-red-50 hover:text-red-600 rounded-2xl font-semibold mt-auto transition-all">
           <LogOut size={20} /><span>Logout</span>
         </button>
       </div>
 
-      <div className="flex-1 p-8 overflow-y-auto">
-        <h1 className="text-2xl font-bold text-gray-900 mb-8">Dashboard Overview</h1>
+      <div className="flex-1 p-10 overflow-y-auto">
+        <div className="flex justify-between items-center mb-10">
+          <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">Dashboard Overview</h1>
+        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-10">
           <StatCard title="Total Leads" value={totalLeads} icon={Users} colorClass="bg-blue-100 text-blue-600" />
           <StatCard title="New Leads" value={newLeads} icon={TrendingUp} colorClass="bg-orange-100 text-orange-600" />
           <StatCard title="Qualified Leads" value={qualifiedLeads} icon={Star} colorClass="bg-purple-100 text-purple-600" />
-          <StatCard title="Won Deals" value={wonLeads} icon={CheckCircle} colorClass="bg-green-100 text-green-600" />
+          <StatCard title="Won Deals" value={wonLeads} icon={CheckCircle} colorClass="bg-emerald-100 text-emerald-600" />
           <StatCard title="Lost Deals" value={lostLeads} icon={XCircle} colorClass="bg-red-100 text-red-600" />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center"><DollarSign className="text-gray-400 mr-2" size={20} /> Total Estimated Deal Value</h3>
-            <p className="text-4xl font-bold text-gray-900">Rs. {totalDealValue.toLocaleString()}</p>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="bg-white p-8 rounded-3xl shadow-[0_2px_10px_rgb(0,0,0,0.02)] border border-slate-100 hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] transition-all duration-300">
+            <h3 className="text-lg font-semibold text-slate-500 mb-4 flex items-center tracking-wide"><DollarSign className="text-indigo-400 mr-2" size={24} /> Total Estimated Deal Value</h3>
+            <p className="text-5xl font-extrabold text-slate-900">Rs. {totalDealValue.toLocaleString()}</p>
           </div>
-          <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center"><CheckCircle className="text-gray-400 mr-2" size={20} /> Total Value of Won Deals</h3>
-            <p className="text-4xl font-bold text-green-600">Rs. {wonDealValue.toLocaleString()}</p>
+          <div className="bg-white p-8 rounded-3xl shadow-[0_2px_10px_rgb(0,0,0,0.02)] border border-slate-100 hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] transition-all duration-300">
+            <h3 className="text-lg font-semibold text-slate-500 mb-4 flex items-center tracking-wide"><CheckCircle className="text-emerald-400 mr-2" size={24} /> Total Value of Won Deals</h3>
+            <p className="text-5xl font-extrabold text-emerald-500 bg-clip-text text-transparent bg-gradient-to-r from-emerald-500 to-emerald-400">Rs. {wonDealValue.toLocaleString()}</p>
           </div>
         </div>
       </div>
